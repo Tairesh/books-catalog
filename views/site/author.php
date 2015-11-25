@@ -1,6 +1,7 @@
 <?php
 
-use yii\grid\GridView;
+use yii\grid\GridView,
+    yii\helpers\Html;
 
 /* @var $this yii\web\View */
 $this->title = $author['first_name'].' '.$author['last_name'].'\'s books';
@@ -18,7 +19,13 @@ $this->title = $author['first_name'].' '.$author['last_name'].'\'s books';
                     'columns' => [
                         'id',
                         'name',
-                        'publisher',
+                        [
+                            'attribute' => 'publisher',
+                            'value' => function ($data) {
+                                return Html::a($data['publisher'], ['publisher', 'id' => $data['publisher_id']]);
+                            },
+                            'format' => 'raw'
+                        ],
                         'price',
                         'year'
                         // ...

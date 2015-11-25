@@ -77,4 +77,40 @@ class SiteController extends Controller
         ]);
         return $this->render('author', ['author' => $author, 'dataProvider' => $dataProvider]);        
     }
+    
+    public function actionPublisher($id)
+    { 
+        $publisher = Yii::$app->db->createCommand('
+                    SELECT * FROM publishers 
+                    WHERE id = :pid
+                ')
+            ->bindParam(':pid', $id)
+            ->queryOne();
+        
+        $count = Yii::$app->db->createCommand('
+                    SELECT COUNT(*) FROM books
+                    WHERE publisher_id = :pid
+                ')
+            ->bindParam(':pid', $id)
+            ->queryScalar();
+        
+        $dataProvider = new SqlDataProvider([
+            'sql' => 'SELECT books.*,
+                        authors.first_name || " " || authors.last_name author
+                    FROM books 
+                    LEFT JOIN authors 
+                        ON authors.id = books.author_id
+                    WHERE publisher_id = :pid',
+            'params' => [':pid' => $id],
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort' => [
+                'defaultOrder' => ['year' => SORT_ASC],
+                'attributes' => ['name', 'author', 'price', 'year']
+            ]
+        ]);
+        return $this->render('publisher', ['publisher' => $publisher, 'dataProvider' => $dataProvider]);        
+    }
 }
