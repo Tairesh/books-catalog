@@ -46,13 +46,10 @@ $RECYCLE.BIN/
 *.lnk
 
 
-config/db.php
-config/params.php
 web/assets
 mail
 runtime
 vendor
-database
 
 requirements.php
 yii
