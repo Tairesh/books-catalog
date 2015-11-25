@@ -1,7 +1,8 @@
 <?php
 
 use yii\grid\GridView,
-    yii\helpers\Html;
+    yii\helpers\Html,
+    yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 $this->title = 'Books Catalog Index';
@@ -13,7 +14,7 @@ $this->title = 'Books Catalog Index';
         <div class="row">
             <div class="col-lg-12">
                 <h2>Books index</h2>
-
+                <?php Pjax::begin(['id' => 'books-index']); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'columns' => [
@@ -38,6 +39,7 @@ $this->title = 'Books Catalog Index';
                         // ...
                     ],
                 ]) ?>
+                <?php Pjax::end(); ?>
             </div>
         </div>
 

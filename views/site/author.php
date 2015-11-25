@@ -1,7 +1,8 @@
 <?php
 
 use yii\grid\GridView,
-    yii\helpers\Html;
+    yii\helpers\Html,
+    yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 $this->title = $author['first_name'].' '.$author['last_name'].'\'s books';
@@ -13,7 +14,8 @@ $this->title = $author['first_name'].' '.$author['last_name'].'\'s books';
         <div class="row">
             <div class="col-lg-12">
                 <h2><?=$author['first_name'].' '.$author['last_name']?>'s books</h2>
-
+                
+                <?php Pjax::begin(['id' => 'books-author']); ?>
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'columns' => [
@@ -31,6 +33,7 @@ $this->title = $author['first_name'].' '.$author['last_name'].'\'s books';
                         // ...
                     ],
                 ]) ?>
+                <?php Pjax::end(); ?>
             </div>
         </div>
 
