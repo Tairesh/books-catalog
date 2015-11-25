@@ -1,6 +1,7 @@
 <?php
 
-use yii\grid\GridView;
+use yii\grid\GridView,
+    yii\helpers\Html;
 
 /* @var $this yii\web\View */
 $this->title = 'Books Catalog Index';
@@ -11,13 +12,20 @@ $this->title = 'Books Catalog Index';
 
         <div class="row">
             <div class="col-lg-12">
-                <h2>Heading</h2>
+                <h2>Books index</h2>
 
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'columns' => [
                         'id',
                         'name',
+                        [
+                            'attribute' => 'author',
+                            'value' => function ($data) {
+                                return Html::a($data['author'], ['author', 'id' => $data['author_id']]);
+                            },
+                            'format' => 'raw'
+                        ],
                         'author',
                         'publisher',
                         'price',
